@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div id="login"></div>
+    <div id="register"></div>
+    <div id="notes"></div>
+
+    <script>
+
+        function loginPage() {
+            $("#login").show();
+            $("#register").hide();
+            $("#notes").hide();
+
+            $("#login").html("");
+
+            $("#login").append(`
+                <h2>Login</h2>
+                Username: <input type="text" id="user"><br><br>
+                Password: <input type="password" id="pass"><br><br>
+                <button id="loginBtn">Login</button>
+                <button id="regBtn">Register</button>
+            `);
+        }
+
+        function registerPage() {
+            $("#login").hide();
+            $("#register").show();
+            $("#register").html("");    
+
+            $("#register").append(`
+                <h2>Registration</h2>
+                Username: <input type="text" id="newUser"><br><br>
+                Password: <input type="password" id="newPass"><br><br>
+                <button id="saveUser">Register</button>
+            `);
+        }
+
+        function notesPage() {
+            $("#login").hide();
+            $("#register").hide();
+            $("#notes").show();
+
+            //$("#notes").html("");
+
+            $("#notes").append(`
+                <h2>Create Note</h2>
+                Title: <input type="text" id="title"><br><br>
+                Note: <textarea id="content"></textarea><br><br>
+                <button id="save">Save Note</button>
+                <h2>My Notes</h2>
+                <div id="view"></div>
+                <button id="logout">Logout</button>
+            `);
+        }
+
+        var username = "user1";
+        var password = "123";
+
+        loginPage();
+
+        $(document).on("click", "#regBtn", function() {
+            registerPage();
+        });
+
+        $(document).on("click", "#saveUser", function() {
+            username = $("#newUser").val();
+            password = $("#newPass").val();
+            alert("Registered successfully");
+            loginPage();
+        });
+
+        $(document).on("click", "#loginBtn", function() {
+            if ($("#user").val() == username && $("#pass").val() == password) {
+                notesPage();
+            } else {
+                alert("Wrong username or password");
+            }
+        });
+
+        $(document).on("click", "#save", function() {
+            var title = $("#title").val();
+            var content = $("#content").val();
+
+            $("#view").append(
+                "<h3>" + title + "</h3><p>" + content + "</p><hr>"
+            );
+
+            $("#title").val("");
+            $("#content").val("");
+        });
+
+        $(document).on("click", "#logout", function() {
+            loginPage();
+        });
+
+    </script>
+
+</body>
+</html>
